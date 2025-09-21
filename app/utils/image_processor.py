@@ -79,7 +79,7 @@ class ImageProcessor:
         l, a, b = cv2.split(lab)
         
         # Apply CLAHE (Contrast Limited Adaptive Histogram Equalization)
-        clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+        clahe = cv2.createCLAHE(clipLimit=3.0, tileGridSize=(8, 8))
         l = clahe.apply(l)
         
         # Merge channels and convert back to BGR
@@ -87,6 +87,74 @@ class ImageProcessor:
         enhanced = cv2.cvtColor(enhanced, cv2.COLOR_LAB2BGR)
         
         return enhanced
+    
+    def enhance_image_aggressive(self, image: np.ndarray) -> np.ndarray:
+        """
+        More aggressive image enhancement for difficult cases
+        
+        Args:
+            image: Input image
+            
+        Returns:
+            Enhanced image
+        """
+        # Multiple enhancement techniques
+        enhanced = image.copy()
+        
+        # 1. Sharpen the image
+        kernel = np.array([[-1,-1,-1], [-1,9,-1], [-1,-1,-1]])
+        sharpened = cv2.filter2D(enhanced, -1, kernel)
+        
+        # 2. Apply gamma correction
+        gamma = 1.2
+        gamma_corrected = np.power(sharpened / 255.0, gamma) * 255.0
+        gamma_corrected = np.uint8(gamma_corrected)
+        
+        # 3. Enhance contrast
+        lab = cv2.cvtColor(gamma_corrected, cv2.COLOR_BGR2LAB)
+        l, a, b = cv2.split(lab)
+        
+        # More aggressive CLAHE
+        clahe = cv2.createCLAHE(clipLimit=4.0, tileGridSize=(8, 8))
+        l = clahe.apply(l)
+        
+        # Merge and convert back
+        enhanced = cv2.merge([l, a, b])
+        enhanced = cv2.cvtColor(enhanced, cv2.COLOR_LAB2BGR)
+        
+        return enhanced
+    
+    def create_multiple_versions(self, image: np.ndarray) -> list:
+        """
+        Create multiple enhanced versions of the image for better detection
+        
+        Args:
+            image: Input image
+            
+        Returns:
+            List of enhanced image versions
+        """
+        versions = []
+        
+        # Original enhanced
+        versions.append(self.enhance_image(image))
+        
+        # Aggressive enhancement
+        versions.append(self.enhance_image_aggressive(image))
+        
+        # Brightness adjusted versions
+        bright = cv2.convertScaleAbs(image, alpha=1.2, beta=20)
+        versions.append(self.enhance_image(bright))
+        
+        # Darker version
+        dark = cv2.convertScaleAbs(image, alpha=0.8, beta=-20)
+        versions.append(self.enhance_image(dark))
+        
+        # High contrast version
+        high_contrast = cv2.convertScaleAbs(image, alpha=1.5, beta=0)
+        versions.append(self.enhance_image(high_contrast))
+        
+        return versions
     
     def detect_face(self, image: np.ndarray) -> Tuple[bool, np.ndarray]:
         """

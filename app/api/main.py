@@ -2,7 +2,7 @@
 FastAPI main application for AI Acne Identification System
 """
 
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, UploadFile, HTTPException, Form
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
@@ -53,9 +53,18 @@ async def health_check():
     return {"status": "healthy", "message": "AI Acne Identification System is running"}
 
 @app.post("/upload")
-async def upload_image(file: UploadFile = File(...)):
+async def upload_image(
+    file: UploadFile = File(...),
+    detection_mode: str = Form("standard"),
+    confidence_threshold: float = Form(0.3)
+):
     """
-    Upload and analyze facial image for acne detection
+    Upload and analyze facial image for acne detection with multiple modes
+    
+    Args:
+        file: Uploaded image file
+        detection_mode: Detection mode ("standard", "sensitive", "aggressive", "multi")
+        confidence_threshold: Confidence threshold (0.1-0.9)
     """
     try:
         # Validate file type
@@ -66,11 +75,53 @@ async def upload_image(file: UploadFile = File(...)):
         image_data = await file.read()
         processed_image = image_processor.preprocess_image(image_data)
         
-        # Enhance image for better detection
-        enhanced_image = image_processor.enhance_image(processed_image)
-        
-        # Detect acne
-        detection_results = acne_detector.detect_acne(enhanced_image)
+        # Apply detection mode
+        print(f"🔍 Detection mode: {detection_mode}, confidence: {confidence_threshold}")
+        try:
+            if detection_mode == "sensitive":
+                # Lower confidence for more detections
+                confidence_threshold = min(confidence_threshold * 0.6, 0.2)
+                enhanced_image = image_processor.enhance_image(processed_image)
+                
+            elif detection_mode == "aggressive":
+                # Multiple enhanced versions
+                enhanced_image = image_processor.enhance_image_aggressive(processed_image)
+                confidence_threshold = min(confidence_threshold * 0.5, 0.15)
+                
+            elif detection_mode == "multi":
+                # Use multiple image versions
+                image_versions = image_processor.create_multiple_versions(processed_image)
+                all_detections = []
+                
+                for version in image_versions:
+                    detection_results = acne_detector.detect_acne(version, confidence_threshold)
+                    all_detections.extend(detection_results["detections"])
+                
+                # Remove duplicates and get best detections
+                final_detections = acne_detector._remove_duplicates(all_detections)
+                detection_results = {
+                    "detections": final_detections,
+                    "total_detections": len(final_detections),
+                    "image_shape": processed_image.shape
+                }
+                
+                # Use the best enhanced version for visualization
+                enhanced_image = image_versions[0]
+                
+            else:  # standard mode
+                enhanced_image = image_processor.enhance_image(processed_image)
+            
+            # Detect acne (skip if multi-mode already processed)
+            if detection_mode != "multi":
+                print(f"🎯 Running detection with mode: {detection_mode}, confidence: {confidence_threshold}")
+                detection_results = acne_detector.detect_acne(enhanced_image, confidence_threshold)
+                
+        except Exception as e:
+            # Fallback to standard mode if any detection mode fails
+            print(f"Detection mode {detection_mode} failed, falling back to standard: {e}")
+            enhanced_image = image_processor.enhance_image(processed_image)
+            detection_results = acne_detector.detect_acne(enhanced_image, 0.3)
+            detection_mode = "standard"
         
         # Draw bounding boxes on image and save it
         image_with_boxes = image_processor.draw_detections(processed_image, detection_results.get("detections", []))
@@ -91,7 +142,9 @@ async def upload_image(file: UploadFile = File(...)):
             "treatments": treatment_recommendations,
             "severity": acne_detector.assess_severity(detection_results),
             "summary": acne_detector.generate_summary(detection_results),
-            "result_image": f"/static/result_{session_id}.jpg"
+            "result_image": f"/static/result_{session_id}.jpg",
+            "detection_mode": detection_mode,
+            "confidence_threshold_used": confidence_threshold
         }
         
         return {

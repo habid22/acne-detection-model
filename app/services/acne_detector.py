@@ -43,7 +43,7 @@ class AcneDetector:
     
     def detect_acne(self, image: np.ndarray, confidence_threshold: float = 0.3) -> Dict[str, Any]:
         """
-        Detect acne lesions in the input image
+        Detect acne lesions in the input image with multiple strategies
         
         Args:
             image: Input image as numpy array
@@ -55,18 +55,44 @@ class AcneDetector:
         if self.model is None:
             self.load_model()
         
-        # Run inference with lower NMS threshold for more detections
-        # Also try different image sizes for better detection
+        all_detections = []
+        
+        # Strategy 1: Standard detection
         results = self.model(image, conf=confidence_threshold, iou=0.4, imgsz=640)
+        all_detections.extend(self._process_results(results))
         
-        # Try with smaller image size for smaller lesions
-        if len(results[0].boxes) < 5:  # If we don't have many detections
-            results_small = self.model(image, conf=confidence_threshold*0.8, iou=0.3, imgsz=416)
-            # Combine results
-            if len(results_small[0].boxes) > len(results[0].boxes):
-                results = results_small
+        # Strategy 2: Lower confidence for more sensitive detection
+        if len(all_detections) < 3:
+            results_low = self.model(image, conf=confidence_threshold*0.6, iou=0.3, imgsz=640)
+            all_detections.extend(self._process_results(results_low))
         
-        # Process results
+        # Strategy 3: Smaller image size for smaller lesions
+        if len(all_detections) < 5:
+            results_small = self.model(image, conf=confidence_threshold*0.7, iou=0.3, imgsz=416)
+            all_detections.extend(self._process_results(results_small))
+        
+        # Strategy 4: Larger image size for better detail
+        if len(all_detections) < 3:
+            results_large = self.model(image, conf=confidence_threshold*0.8, iou=0.4, imgsz=832)
+            all_detections.extend(self._process_results(results_large))
+        
+        # Strategy 5: Very low confidence for maximum sensitivity
+        if len(all_detections) < 2:
+            results_ultra = self.model(image, conf=0.15, iou=0.2, imgsz=640)
+            all_detections.extend(self._process_results(results_ultra))
+        
+        # Remove duplicate detections using NMS
+        final_detections = self._remove_duplicates(all_detections)
+        
+        return {
+            "detections": final_detections,
+            "total_detections": len(final_detections),
+            "image_shape": image.shape,
+            "detection_strategies_used": len([d for d in all_detections if d])
+        }
+    
+    def _process_results(self, results) -> list:
+        """Process YOLO results into detection format"""
         detections = []
         for result in results:
             boxes = result.boxes
@@ -84,12 +110,70 @@ class AcneDetector:
                         "class_id": class_id
                     }
                     detections.append(detection)
+        return detections
+    
+    def _remove_duplicates(self, detections: list, iou_threshold: float = 0.5) -> list:
+        """Remove duplicate detections using NMS-like approach"""
+        if not detections:
+            return []
         
-        return {
-            "detections": detections,
-            "total_detections": len(detections),
-            "image_shape": image.shape
-        }
+        # Sort by confidence (highest first)
+        detections.sort(key=lambda x: x['confidence'], reverse=True)
+        
+        final_detections = []
+        for detection in detections:
+            is_duplicate = False
+            for final_det in final_detections:
+                if self._calculate_iou(detection['bbox'], final_det['bbox']) > iou_threshold:
+                    is_duplicate = True
+                    break
+            
+            if not is_duplicate:
+                final_detections.append(detection)
+        
+        return final_detections
+    
+    def _calculate_iou(self, box1: list, box2: list) -> float:
+        """Calculate Intersection over Union (IoU) of two bounding boxes"""
+        x1_1, y1_1, x2_1, y2_1 = box1
+        x1_2, y1_2, x2_2, y2_2 = box2
+        
+        # Calculate intersection
+        x1_i = max(x1_1, x1_2)
+        y1_i = max(y1_1, y1_2)
+        x2_i = min(x2_1, x2_2)
+        y2_i = min(y2_1, y2_2)
+        
+        if x2_i <= x1_i or y2_i <= y1_i:
+            return 0.0
+        
+        intersection = (x2_i - x1_i) * (y2_i - y1_i)
+        area1 = (x2_1 - x1_1) * (y2_1 - y1_1)
+        area2 = (x2_2 - x1_2) * (y2_2 - y1_2)
+        union = area1 + area2 - intersection
+        
+        return intersection / union if union > 0 else 0.0
+    
+    def _remove_duplicates(self, detections: list, iou_threshold: float = 0.5) -> list:
+        """Remove duplicate detections using NMS-like approach"""
+        if not detections:
+            return []
+        
+        # Sort by confidence (highest first)
+        detections.sort(key=lambda x: x['confidence'], reverse=True)
+        
+        final_detections = []
+        for detection in detections:
+            is_duplicate = False
+            for final_det in final_detections:
+                if self._calculate_iou(detection['bbox'], final_det['bbox']) > iou_threshold:
+                    is_duplicate = True
+                    break
+            
+            if not is_duplicate:
+                final_detections.append(detection)
+        
+        return final_detections
     
     def assess_severity(self, detection_results: Dict[str, Any]) -> Dict[str, Any]:
         """
