@@ -32,7 +32,7 @@ app.add_middleware(
 )
 
 # Mount static files
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/results archive", StaticFiles(directory="results archive"), name="results archive")
 
 # Initialize templates
 templates = Jinja2Templates(directory="templates")
@@ -130,7 +130,7 @@ async def upload_image(
         import uuid
         session_id = str(uuid.uuid4())
         result_image_path = f"results archive/result_{session_id}.jpg"
-        os.makedirs("static", exist_ok=True)
+        os.makedirs("results archive", exist_ok=True)
         image_processor.save_image(image_with_boxes, result_image_path)
         
         # Get treatment recommendations
