@@ -17,18 +17,20 @@
 
 ## 🎯 Overview
 
-This project presents a comprehensive AI-powered acne detection system built using YOLOv8 architecture. The system demonstrates state-of-the-art performance in dermatological image analysis, achieving high precision and recall rates for acne lesion detection. The implementation includes a full-stack web application with real-time image processing capabilities and intelligent treatment recommendations.
+This project presents a comprehensive AI-powered acne detection system built using YOLOv8 architecture. The system demonstrates functional performance in dermatological image analysis, achieving moderate precision and recall rates for acne lesion detection. The implementation includes a full-stack web application with real-time image processing capabilities and intelligent treatment recommendations.
+
+**Important Note**: This model was developed as a showcase project with available resources and represents a proof-of-concept implementation. Performance metrics are below industry standards and the model is not intended for clinical or production use.
 
 ### Key Capabilities
 
-- **🔍 Real-time Acne Detection**: Identifies acne lesions with high accuracy using YOLOv8s architecture
+- **🔍 Real-time Acne Detection**: Identifies acne lesions with moderate accuracy using YOLOv8s architecture
 - **📦 Visual Detection Results**: Draws precise bounding boxes around detected acne lesions
 - **📊 Severity Assessment**: Evaluates acne severity (mild, moderate, severe) based on lesion count
 - **💊 Treatment Recommendations**: Provides evidence-based treatment suggestions based on severity
-- **🖼️ Advanced Image Enhancement**: Automatically enhances images for optimal detection accuracy
+- **🖼️ Advanced Image Enhancement**: Automatically enhances images for improved detection accuracy
 - **📏 Multi-scale Detection**: Uses multiple image scales to detect both large and small lesions
 - **🌐 Interactive Web Interface**: User-friendly web application with real-time analysis
-- **⚡ High Performance**: Achieves 60%+ confidence in acne detection with fast inference
+- **⚡ Moderate Performance**: Achieves 60%+ confidence in acne detection with fast inference
 
 ## 📊 Model Performance
 
@@ -100,8 +102,8 @@ belle/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/belle.git
-   cd belle
+   git clone https://github.com/habid22/acne-detection-model.git
+   cd acne-detection-model
    ```
 
 2. **Create and activate virtual environment**
@@ -324,10 +326,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Contact
 
 - **Author**: Hassan Amin
-- **Repository**: [GitHub Repository](https://github.com/yourusername/belle)
-- **Email**: [hassan.amin@example.com](mailto:hassan.amin@example.com)
+- **Repository**: [https://github.com/habid22/acne-detection-model](https://github.com/habid22/acne-detection-model)
+- **Portfolio**: [https://hassan-amin.vercel.app/](https://hassan-amin.vercel.app/)
+- **Email**: [habid22@uwo.ca](mailto:habid22@uwo.ca)
 - **LinkedIn**: [Hassan Amin's LinkedIn](https://linkedin.com/in/hassan-amin)
-- **Portfolio**: [Hassan Amin's Portfolio](https://hassanamin.dev)
 
 ---
 

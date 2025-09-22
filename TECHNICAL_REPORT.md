@@ -6,7 +6,9 @@
 
 ## Executive Summary
 
-This project presents a comprehensive AI-powered acne detection system built using YOLOv8 (You Only Look Once version 8) architecture. The system demonstrates strong performance in dermatological image analysis, achieving **58.2% precision** and **63.1% recall** rates for acne lesion detection. The implementation includes a full-stack web application with real-time image processing capabilities and intelligent treatment recommendations.
+This project presents a comprehensive AI-powered acne detection system built using YOLOv8 (You Only Look Once version 8) architecture. The system demonstrates functional performance in dermatological image analysis, achieving **58.2% precision** and **63.1% recall** rates for acne lesion detection. The implementation includes a full-stack web application with real-time image processing capabilities and intelligent treatment recommendations.
+
+**Important Note**: This model was developed as a showcase project with available resources and represents a proof-of-concept implementation. Performance metrics are below industry standards and the model is not intended for clinical or production use.
 
 ### Key Achievements (Verified Results)
 - **Final Model Performance**: 58.2% precision, 63.1% recall, 59.3% mAP@0.5
@@ -315,8 +317,9 @@ The complete training results are available in:
 ---
 
 **Author**: Hassan Amin  
-**Project Repository**: [GitHub Repository URL]  
-**Contact**: [Your Contact Information]  
+**Project Repository**: [https://github.com/habid22/acne-detection-model](https://github.com/habid22/acne-detection-model)  
+**Portfolio**: [https://hassan-amin.vercel.app/](https://hassan-amin.vercel.app/)  
+**Contact**: [habid22@uwo.ca](mailto:habid22@uwo.ca)  
 **Last Updated**: September 2025
 
 

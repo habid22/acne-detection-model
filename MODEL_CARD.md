@@ -15,6 +15,8 @@
 ### Purpose
 This model is designed to automatically detect and localize acne lesions in facial images, providing bounding box coordinates and confidence scores for each detection.
 
+**Important Disclaimer**: This model was developed as a showcase project with available resources and represents a proof-of-concept implementation. Performance metrics are below industry standards and the model is not intended for clinical or production use.
+
 ### Intended Use
 - **Primary Use**: Educational and research purposes in dermatological image analysis
 - **Secondary Use**: Assisting healthcare professionals in preliminary acne assessment
@@ -259,10 +261,10 @@ This model is released under the MIT License. See LICENSE file for details.
 
 ## Contact
 
-- **Repository**: [GitHub Repository URL]
-- **Email**: [Your Email]
-- **LinkedIn**: [Your LinkedIn Profile]
-- **Portfolio**: [Your Portfolio Website]
+- **Repository**: [https://github.com/habid22/acne-detection-model](https://github.com/habid22/acne-detection-model)
+- **Portfolio**: [https://hassan-amin.vercel.app/](https://hassan-amin.vercel.app/)
+- **Email**: [habid22@uwo.ca](mailto:habid22@uwo.ca)
+- **LinkedIn**: [Hassan Amin's LinkedIn](https://linkedin.com/in/hassan-amin)
 
 ## Training Evidence
 

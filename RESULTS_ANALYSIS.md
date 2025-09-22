@@ -8,6 +8,8 @@
 
 This document provides a comprehensive analysis of the performance results achieved by our AI-powered acne detection system. The analysis covers model performance metrics, training results, system benchmarks, and comparative evaluations against baseline methods. All results are based on actual training data from the `acne_detector4` training run.
 
+**Important Note**: This model was developed as a showcase project with available resources and represents a proof-of-concept implementation. Performance metrics are below industry standards and the model is not intended for clinical or production use.
+
 ## 1. Model Performance Overview
 
 ### 1.1 Detection Metrics Summary
@@ -289,6 +291,9 @@ The system successfully balances accuracy and efficiency, making it suitable for
 ---
 
 **Author**: Hassan Amin  
+**Repository**: [https://github.com/habid22/acne-detection-model](https://github.com/habid22/acne-detection-model)  
+**Portfolio**: [https://hassan-amin.vercel.app/](https://hassan-amin.vercel.app/)  
+**Email**: [habid22@uwo.ca](mailto:habid22@uwo.ca)  
 **Analysis Date**: September 2025  
 **Model Version**: 1.0  
 **Dataset Version**: Kaggle Acne Dataset v1.0  

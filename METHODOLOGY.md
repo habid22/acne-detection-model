@@ -669,7 +669,9 @@ def log_experiment(config, results):
 
 ## 10. Conclusion
 
-This methodology document provides a comprehensive overview of the data collection, preprocessing, training, and evaluation processes used in developing the AI-powered acne detection system. The approach combines state-of-the-art computer vision techniques with rigorous validation methods to ensure reliable and reproducible results.
+This methodology document provides a comprehensive overview of the data collection, preprocessing, training, and evaluation processes used in developing the AI-powered acne detection system. The approach combines computer vision techniques with validation methods to ensure reliable and reproducible results.
+
+**Important Note**: This model was developed as a showcase project with available resources and represents a proof-of-concept implementation. Performance metrics are below industry standards and the model is not intended for clinical or production use.
 
 ### Key Methodological Strengths
 
@@ -691,6 +693,9 @@ This methodology document provides a comprehensive overview of the data collecti
 ---
 
 **Author**: Hassan Amin  
+**Repository**: [https://github.com/habid22/acne-detection-model](https://github.com/habid22/acne-detection-model)  
+**Portfolio**: [https://hassan-amin.vercel.app/](https://hassan-amin.vercel.app/)  
+**Email**: [habid22@uwo.ca](mailto:habid22@uwo.ca)  
 **Methodology Version**: 1.0  
 **Last Updated**: September 2025  
 **Review Status**: Peer Reviewed
