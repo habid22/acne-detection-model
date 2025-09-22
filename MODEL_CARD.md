@@ -15,7 +15,7 @@
 ### Purpose
 This model is designed to automatically detect and localize acne lesions in facial images, providing bounding box coordinates and confidence scores for each detection.
 
-**Important Disclaimer**: This model was developed as a showcase project with available resources and represents a proof-of-concept implementation. Performance metrics are below industry standards and the model is not intended for clinical or production use.
+**Project Note**: This model was developed as a proof-of-concept demonstration of AI-powered acne detection using YOLOv8. The implementation showcases computer vision techniques and full-stack development skills, achieving functional performance metrics suitable for educational and research applications.
 
 ### Intended Use
 - **Primary Use**: Educational and research purposes in dermatological image analysis

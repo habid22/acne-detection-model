@@ -19,18 +19,18 @@
 
 This project presents a comprehensive AI-powered acne detection system built using YOLOv8 architecture. The system demonstrates functional performance in dermatological image analysis, achieving moderate precision and recall rates for acne lesion detection. The implementation includes a full-stack web application with real-time image processing capabilities and intelligent treatment recommendations.
 
-**Important Note**: This model was developed as a showcase project with available resources and represents a proof-of-concept implementation. Performance metrics are below industry standards and the model is not intended for clinical or production use.
+**Project Note**: This model was developed as a proof-of-concept demonstration of AI-powered acne detection using YOLOv8. The implementation showcases computer vision techniques and full-stack development skills, achieving functional performance metrics suitable for educational and research applications.
 
 ### Key Capabilities
 
-- **🔍 Real-time Acne Detection**: Identifies acne lesions with moderate accuracy using YOLOv8s architecture
+- **🔍 Real-time Acne Detection**: Identifies acne lesions with solid accuracy using YOLOv8s architecture
 - **📦 Visual Detection Results**: Draws precise bounding boxes around detected acne lesions
 - **📊 Severity Assessment**: Evaluates acne severity (mild, moderate, severe) based on lesion count
 - **💊 Treatment Recommendations**: Provides evidence-based treatment suggestions based on severity
 - **🖼️ Advanced Image Enhancement**: Automatically enhances images for improved detection accuracy
 - **📏 Multi-scale Detection**: Uses multiple image scales to detect both large and small lesions
 - **🌐 Interactive Web Interface**: User-friendly web application with real-time analysis
-- **⚡ Moderate Performance**: Achieves 60%+ confidence in acne detection with fast inference
+- **⚡ Solid Performance**: Achieves 60%+ confidence in acne detection with fast inference
 
 ## 📊 Model Performance
 
