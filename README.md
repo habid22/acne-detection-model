@@ -81,7 +81,7 @@ belle/
 │   └── acne_dataset.yaml         # YOLO dataset configuration
 ├── runs/                         # Training run results
 │   └── train/                    # Training outputs and metrics
-├── static/                       # Frontend assets and result images
+├── results archive/              # Frontend assets and result images
 ├── templates/                    # HTML templates
 │   └── index.html                # Main web interface
 ├── requirements.txt              # Python dependencies

@@ -129,7 +129,7 @@ async def upload_image(
         # Save the image with bounding boxes
         import uuid
         session_id = str(uuid.uuid4())
-        result_image_path = f"static/result_{session_id}.jpg"
+        result_image_path = f"results archive/result_{session_id}.jpg"
         os.makedirs("static", exist_ok=True)
         image_processor.save_image(image_with_boxes, result_image_path)
         
@@ -142,7 +142,7 @@ async def upload_image(
             "treatments": treatment_recommendations,
             "severity": acne_detector.assess_severity(detection_results),
             "summary": acne_detector.generate_summary(detection_results),
-            "result_image": f"/static/result_{session_id}.jpg",
+            "result_image": f"/results archive/result_{session_id}.jpg",
             "detection_mode": detection_mode,
             "confidence_threshold_used": confidence_threshold
         }
